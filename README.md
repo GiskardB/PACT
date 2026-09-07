@@ -50,18 +50,19 @@ interfaces:
 **Draft, v0.4 — not a finalized industry standard.** See
 [§50, Draft Status](SPECIFICATION.md#50-draft-status) for what that means in practice,
 and [§47, Open Questions](SPECIFICATION.md#47-open-questions) for what's still
-unresolved. The intended path is community review and implementation feedback, then an
-eventual proposal to [AAIF](https://aaif.dev) — not a big-bang 1.0 written in isolation.
+unresolved. The intended path is community review and feedback from independent
+implementations — not a big-bang 1.0 written in isolation.
 
-## Reference implementation
+PACT is not tied to any one implementation, framework or vendor — see
+[§28, No Required Framework](SPECIFICATION.md#28-no-required-framework) and
+[§40, What Makes PACT Different](SPECIFICATION.md#40-what-makes-pact-different).
 
-**[Gargantua](https://github.com/GiskardB/gargantua)** carries `cognition`, `contract`
-and `interfaces` as real, tested fields on its own agent manifest — the "Agent Manifest"
-layer in PACT's own ecosystem diagram — and projects a standalone PACT Core document
-live at `GET /.well-known/pact.json` on every running agent. What that implementation
-experience fed back into this specification (wire-format pitfalls, an authoring-UX
-lesson, evidence for one of the open questions) is in
-[§46, Reference Implementations](SPECIFICATION.md#46-reference-implementations).
+## Implementations
+
+[§46, Reference Implementations](SPECIFICATION.md#46-reference-implementations) lists
+known implementations and, non-normatively, what building each one fed back into this
+specification. Nothing in PACT requires any of them — the section exists as portability
+evidence (§44), and grows as more implementations show up.
 
 ## License
 

@@ -417,6 +417,13 @@ PACT should compose with such specifications rather than duplicate them.
 
 ## 17. Relationship With Agent Manifest
 
+**"Agent Manifest" here names a role, not one specific external standard** — whatever a
+given platform uses to express authority, operational boundaries, risk and stopping
+power for its agents. Different platforms will have different, non-interchangeable
+manifests filling this role; PACT composes with whichever one an implementation already
+has, rather than assuming a single canonical governance spec exists. (§46 lists
+implementations and what each one uses to fill this role.)
+
 The strongest distinction is:
 
 ```text
@@ -1126,7 +1133,7 @@ The HTML example is tooling/demo material, not part of Core.
         ↓
 9. Community review
         ↓
-10. AAIF proposal
+10. Independent implementations
 ```
 
 The project should not begin with an SDK or runtime.
@@ -1190,13 +1197,16 @@ These should not be added to Core without evidence that they belong there.
 *Non-normative.* Listed here to ground the specification against real usage, per the
 development order in §43 (step 9, community review, benefits from at least one working
 implementation to react to) — not to endorse a vendor or bind Core to one stack's
-choices.
+choices. **PACT does not require any of these** — nothing about the specification
+depends on a particular runtime, framework or vendor (§28, §40); this section is
+evidence that Core is implementable and portable (§44), not a recommendation.
 
-- **Gargantua** (Runtime + Studio) carries `cognition`, `contract` and `interfaces` as
-  additive fields directly on its own agent manifest, which plays the role PACT calls
-  "Agent Manifest" in §17 — authority, operational boundaries and governance — and
-  projects a standalone PACT Core document from it. `contract.autonomy` is modeled as a
-  closed, typed enum internally (informing open question 4, §47), while the manifest wire
+- **Gargantua**, one such implementation (Runtime + Studio), carries `cognition`,
+  `contract` and `interfaces` as additive fields directly on its own agent manifest —
+  one example of something filling the "Agent Manifest" role described in §17, not the
+  only possible one — and projects a standalone PACT Core document from it.
+  `contract.autonomy` is modeled as a closed, typed enum internally (informing open
+  question 4, §47), while the manifest wire
   format stays the plain integer this document specifies — the two are independent by
   design (§34). This was the exercise that produced the §11/§13/§14/§15/§34
   clarifications first added in the v0.3 revision: every wording ambiguity fixed there
