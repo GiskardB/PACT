@@ -9,12 +9,18 @@ provide, and under what basic contract can it operate?**
 
 It is not an agent runtime, framework, orchestration engine, agent-to-agent protocol,
 tool protocol, governance framework, registry, or LLM API. It is a small, human-readable,
-vendor-neutral description layer designed to compose with A2A, MCP, ANP/ADP, Agent
-Manifest and other standards — not replace them. The core design principle:
+vendor-neutral description layer designed to compose with other agent standards, not
+replace them — **A2A** (Agent2Agent Protocol, agent-to-agent interop), **MCP** (Model
+Context Protocol, tools/resources/prompts), **ANP/ADP** (Agent Network Protocol / Agent
+Description Protocol, decentralized identity and discovery), and whatever governance
+layer a platform already has (see [§17](SPECIFICATION.md#17-relationship-with-agent-manifest)
+on why PACT calls that role "Agent Manifest" without naming one specific standard). The
+core design principle:
 
 > The specification must be easier to understand and implement than the problem it describes.
 
-**Read the specification: [SPECIFICATION.md](SPECIFICATION.md)**
+**Read the specification: [SPECIFICATION.md](SPECIFICATION.md)** (has a
+[table of contents](SPECIFICATION.md#contents) for the 50 short sections)
 
 ---
 

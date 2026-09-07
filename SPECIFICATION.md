@@ -17,6 +17,63 @@ as broken controls to the former even when they are working exactly as designed 
 latter. The second finding produced a new authoring guideline in §29. Everything else is
 unchanged from v0.3; no Core field, example or section number moved.
 
+---
+
+## Contents
+
+1. [Executive Summary](#1-executive-summary)
+2. [Design Goals](#2-design-goals)
+3. [Conceptual Model](#3-conceptual-model)
+4. [Minimal Manifest](#4-minimal-manifest)
+5. [Extended Manifest](#5-extended-manifest)
+6. [Agent](#6-agent)
+7. [Metadata](#7-metadata)
+8. [Identity](#8-identity)
+9. [Purpose](#9-purpose)
+10. [Capabilities](#10-capabilities)
+11. [Cognition (Self-Declaration)](#11-cognition-self-declaration)
+12. [Model Semantics](#12-model-semantics)
+13. [Cognition Requirements](#13-cognition-requirements)
+14. [Contract](#14-contract)
+15. [Autonomy](#15-autonomy)
+16. [What PACT Does Not Own](#16-what-pact-does-not-own)
+17. [Relationship With Agent Manifest](#17-relationship-with-agent-manifest)
+18. [Relationship With A2A](#18-relationship-with-a2a)
+19. [Relationship With MCP](#19-relationship-with-mcp)
+20. [Relationship With ANP / ADP](#20-relationship-with-anp-adp)
+21. [PACT as a Semantic Layer](#21-pact-as-a-semantic-layer)
+22. [Interfaces](#22-interfaces)
+23. [Progressive Complexity](#23-progressive-complexity)
+24. [Human Questions](#24-human-questions)
+25. [Simplicity Rule](#25-simplicity-rule)
+26. [No Performance Declarations](#26-no-performance-declarations)
+27. [No Runtime](#27-no-runtime)
+28. [No Required Framework](#28-no-required-framework)
+29. [Authoring and HTML](#29-authoring-and-html)
+30. [Machine Validation](#30-machine-validation)
+31. [Declaration vs Verification](#31-declaration-vs-verification)
+32. [Extensions](#32-extensions)
+33. [Profiles](#33-profiles)
+34. [Versioning Policy](#34-versioning-policy)
+35. [Registry Use](#35-registry-use)
+36. [Agent Selection](#36-agent-selection)
+37. [Examples](#37-examples)
+38. [Interoperability Strategy](#38-interoperability-strategy)
+39. [Prior-Art Positioning](#39-prior-art-positioning)
+40. [What Makes PACT Different](#40-what-makes-pact-different)
+41. [Core vs Extension Decision Rule](#41-core-vs-extension-decision-rule)
+42. [Proposed Repository](#42-proposed-repository)
+43. [Development Order](#43-development-order)
+44. [Success Criteria](#44-success-criteria)
+45. [Future Work](#45-future-work)
+46. [Reference Implementations](#46-reference-implementations)
+47. [Open Questions](#47-open-questions)
+48. [Positioning](#48-positioning)
+49. [Final Design Position](#49-final-design-position)
+50. [Draft Status](#50-draft-status)
+
+---
+
 ## 1. Executive Summary
 
 PACT is a deliberately small, human-readable specification for describing an AI agent in a machine-readable way.
@@ -27,7 +84,19 @@ PACT answers:
 
 PACT is not an agent runtime, framework, orchestration engine, agent-to-agent protocol, tool protocol, governance framework, registry, or LLM API.
 
-PACT is a **semantic description and contract layer** designed to coexist with A2A, MCP, ANP/ADP, Agent Manifest and other standards.
+PACT is a **semantic description and contract layer** designed to coexist with other
+agent standards, not replace them:
+
+| Acronym | Full name | Owns |
+|---|---|---|
+| **A2A** | Agent2Agent Protocol | agent-to-agent task exchange and interoperability |
+| **MCP** | Model Context Protocol | how an agent calls tools, resources and prompts |
+| **ANP** | Agent Network Protocol | decentralized agent identity, discovery and networking |
+| **ADP** | Agent Description Protocol | agent metadata description (ANP's companion spec) |
+| **Agent Manifest** | *(a role, not one named standard — see §17)* | authority, operational boundaries, governance |
+
+§18-20 detail how PACT relates to each of the first three; §39 has the full
+prior-art comparison table.
 
 The core principle is:
 
@@ -90,7 +159,18 @@ interfaces:
     endpoint: https://example.com/a2a
 ```
 
-Everything else is optional.
+`apiVersion` and `kind` are envelope fields, not Core semantics — every field below them
+is what the rest of this document defines. `apiVersion: pact/v1` pins the schema's major
+version (§34). `kind: Agent` identifies the document type; this document only defines
+`Agent`, but the field exists so the envelope can support other document kinds later
+(a capability catalog, a profile document) without changing how an `Agent` document is
+read.
+
+Everything else below `capabilities` is optional — but a manifest with no `interfaces`
+describes an agent nothing can reach, so a *practically* minimal manifest usually
+includes at least one, as shown here. §23's progressive walkthrough introduces
+`interfaces` last for teaching purposes (one new concept at a time); that ordering is
+pedagogical, not a claim that interfaces are the least necessary field.
 
 ---
 
@@ -177,6 +257,14 @@ An optional stable identifier may be provided:
 metadata:
   id: urn:example:agent:architecture
 ```
+
+`name` is the primary, human-facing identifier and is expected to be readable and
+sometimes to change (a rebrand, a typo fix). `id` is for callers and registries that
+need a reference that survives a rename — it answers "which agent, durably" where
+`name` answers "what is it called right now". Most manifests don't need `id` at all;
+add it when something external (a registry entry, a stored reference) must keep
+pointing at the same agent across a `name` change. No particular scheme is mandated —
+`urn:` is one convention, not a requirement.
 
 ---
 
@@ -556,7 +644,13 @@ PACT does not define them.
 
 ## 23. Progressive Complexity
 
-### Level 0 — Identity
+Each level below is an isolated snippet showing one new concept, not a cumulative
+manifest — Level 3 doesn't imply Levels 0-2 are absent, it just isolates what's new.
+The order is pedagogical (introduce one concept at a time), not a ranking of necessity:
+§4 already shows that a *practically* useful minimal manifest includes `interfaces`
+despite it appearing last here.
+
+### Level 0 — Metadata
 
 ```yaml
 apiVersion: pact/v1
@@ -565,6 +659,10 @@ kind: Agent
 metadata:
   name: weather-agent
 ```
+
+(This is `metadata`, not the `identity` block — see §7 vs §8. A name is enough to
+exist as a document; `identity.provider` answers a different, optional question:
+who publishes it.)
 
 ### Level 1 — Capability
 
@@ -608,6 +706,7 @@ Every Core field should map to a simple human question.
 | Field | Human question |
 |---|---|
 | `metadata.name` | What is it called? |
+| `metadata.id` | Which agent, durably — even if the name changes? |
 | `metadata.description` | What is it? |
 | `identity.provider` | Who publishes it? |
 | `purpose` | What is it for? |
