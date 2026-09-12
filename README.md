@@ -70,6 +70,12 @@ known implementations and, non-normatively, what building each one fed back into
 specification. Nothing in PACT requires any of them — the section exists as portability
 evidence (§44), and grows as more implementations show up.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to propose changes, and
+[GOVERNANCE.md](GOVERNANCE.md) for how decisions get made. Current maintainers are listed
+in [MAINTAINERS.md](MAINTAINERS.md).
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

@@ -40,7 +40,7 @@ unchanged from v0.3; no Core field, example or section number moved.
 17. [Relationship With Agent Manifest](#17-relationship-with-agent-manifest)
 18. [Relationship With A2A](#18-relationship-with-a2a)
 19. [Relationship With MCP](#19-relationship-with-mcp)
-20. [Relationship With ANP / ADP](#20-relationship-with-anp-adp)
+20. [Relationship With ANP / ADP](#20-relationship-with-anp--adp)
 21. [PACT as a Semantic Layer](#21-pact-as-a-semantic-layer)
 22. [Interfaces](#22-interfaces)
 23. [Progressive Complexity](#23-progressive-complexity)
