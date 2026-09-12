@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PACT — the open contract for AI agents</title>
+<meta name="description" content="PACT is a small, human-readable, vendor-neutral specification for describing an AI agent's identity, capabilities, cognition and contract.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-code: #171717;
+    --text: #171717;
+    --text-dim: #737373;
+    --border: #e5e5e5;
+    --accent: #1f8a3a;
+    --accent-bg: #eaf6ec;
+    --max-width: 860px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 400;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  code, pre, .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(250, 250, 250, 0.9);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+  }
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav .brand {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    font-size: 1.05rem;
+    text-decoration: none;
+    color: var(--text);
+  }
+  nav .links { display: flex; gap: 1.5rem; }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  nav a:hover { color: var(--text); }
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+  .hero {
+    padding: 5rem 0 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+  }
+  .lede {
+    font-size: 1.25rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 0 2rem;
+  }
+  .cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn:hover { opacity: 0.85; }
+  section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+  p { color: var(--text-dim); }
+  .questions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .questions li {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .questions b { display: block; margin-bottom: 0.25rem; font-weight: 500; }
+  pre {
+    background: var(--bg-code);
+    color: #e5e5e5;
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .composes { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  .chip {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  footer {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer a { color: var(--text-dim); }
+  @media (max-width: 600px) {
+    h1 { font-size: 2.1rem; }
+    .questions { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a class="brand" href="#">PACT</a>
+    <div class="links">
+      <a href="https://github.com/GiskardB/PACT/blob/main/SPECIFICATION.md">Specification</a>
+      <a href="https://github.com/GiskardB/PACT/tree/main/examples">Examples</a>
+      <a href="https://github.com/GiskardB/PACT">GitHub</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="kicker">Draft — v0.4</span>
+    <h1>The open contract for AI agents.</h1>
+    <p class="lede">
+      A small, human-readable, vendor-neutral specification for describing what an AI
+      agent is, what it can do, what kind of cognition it provides, and under what
+      basic contract it can operate.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/GiskardB/PACT/blob/main/SPECIFICATION.md">Read the specification</a>
+      <a class="btn" href="https://github.com/GiskardB/PACT/tree/main/examples">Browse examples</a>
+      <a class="btn" href="https://github.com/GiskardB/PACT">View on GitHub</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Four questions</h2>
+    <ul class="questions">
+      <li><b>Capability</b>What can the agent do?</li>
+      <li><b>Cognition</b>What kind of AI capabilities does it provide?</li>
+      <li><b>Contract</b>Under what basic conditions may it act?</li>
+      <li><b>Interface</b>How can another system interact with it?</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>A minimal manifest</h2>
+    <p>Everything below <code>capabilities</code> is optional.</p>
+    <pre><code>apiVersion: pact/v1
+kind: Agent
+
+metadata:
+  name: architecture-agent
+  version: 1.0.0
+
+capabilities:
+  - architecture-analysis
+
+interfaces:
+  - protocol: a2a
+    endpoint: https://example.com/a2a</code></pre>
+  </section>
+
+  <section>
+    <h2>Composes, doesn't replace</h2>
+    <p>
+      PACT is not an agent runtime, framework, orchestration engine, agent-to-agent
+      protocol, tool protocol, governance framework, registry, or LLM API. It's a
+      semantic description and contract layer designed to sit alongside the standards
+      that already handle those jobs.
+    </p>
+    <div class="composes">
+      <span class="chip">A2A — agent-to-agent interop</span>
+      <span class="chip">MCP — tools, resources, prompts</span>
+      <span class="chip">ANP / ADP — decentralized identity &amp; discovery</span>
+      <span class="chip">your platform's own governance layer</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Status</h2>
+    <p>
+      PACT is a draft, not a released standard — version 0.4, one implementation so
+      far. The intended path is community review and feedback from independent
+      implementations, not a big-bang 1.0 written in isolation. See
+      <a href="https://github.com/GiskardB/PACT/blob/main/GOVERNANCE.md">GOVERNANCE.md</a>
+      for how decisions get made and
+      <a href="https://github.com/GiskardB/PACT/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>
+      for how to propose a change.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <span>MIT License</span>
+  <a href="https://github.com/GiskardB/PACT">github.com/GiskardB/PACT</a>
+</footer>
+</body>
+</html>
