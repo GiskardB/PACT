@@ -1,22 +1,30 @@
-// Parse every ```yaml fenced block in SPECIFICATION.md and fail on invalid YAML.
-import { readFileSync } from "node:fs";
+// Parse every ```yaml fenced block in SPECIFICATION.md, plus every file under
+// examples/, and fail on invalid YAML.
+import { readFileSync, readdirSync } from "node:fs";
 import { load } from "js-yaml";
 
-const text = readFileSync("SPECIFICATION.md", "utf8");
-const blocks = [...text.matchAll(/```yaml\n([\s\S]*?)```/g)].map((m) => m[1]);
+const specText = readFileSync("SPECIFICATION.md", "utf8");
+const blocks = [...specText.matchAll(/```yaml\n([\s\S]*?)```/g)].map(
+  (m) => [`SPECIFICATION.md block ${m.index}`, m[1]],
+);
+
+const exampleFiles = readdirSync("examples").filter((f) => f.endsWith(".yaml"));
+for (const file of exampleFiles) {
+  blocks.push([`examples/${file}`, readFileSync(`examples/${file}`, "utf8")]);
+}
 
 const failures = [];
-blocks.forEach((block, i) => {
+for (const [label, block] of blocks) {
   try {
     load(block);
   } catch (e) {
-    failures.push([i, e]);
+    failures.push([label, e]);
   }
-});
+}
 
-console.log(`Checked ${blocks.length} YAML examples in SPECIFICATION.md`);
-for (const [i, e] of failures) {
-  console.log(`--- block ${i} is invalid YAML ---\n${e}\n`);
+console.log(`Checked ${blocks.length} YAML examples (SPECIFICATION.md + examples/)`);
+for (const [label, e] of failures) {
+  console.log(`--- ${label} is invalid YAML ---\n${e}\n`);
 }
 
 process.exit(failures.length ? 1 : 0);

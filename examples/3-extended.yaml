@@ -1,0 +1,54 @@
+# Every optional Core field in one document, for reference. Nothing here is
+# required — see 1-minimal.yaml and 2-typical.yaml for what real manifests
+# usually look like. See SPECIFICATION.md §5 (Extended Manifest).
+apiVersion: pact/v1
+kind: Agent
+
+metadata:
+  name: architecture-agent
+  version: 2.1.0
+  description: Analyze software architectures and source code.
+
+identity:
+  provider: Example Corporation
+
+purpose:
+  description: Produce architecture analysis and recommendations.
+
+capabilities:
+  - id: architecture-analysis
+    description: Analyze software architectures
+  - id: source-code-review
+    description: Review source code
+
+cognition:
+  modalities:
+    - text
+    - image
+
+  capabilities:
+    - reasoning
+    - planning
+    - code-understanding
+    - structured-output
+
+  requirements:
+    contextWindow:
+      minimum: 64000
+
+  models:
+    primary:
+      provider: anthropic
+      family: claude
+
+contract:
+  autonomy:
+    level: 2
+  permissions:
+    - read_repository
+
+interfaces:
+  - protocol: a2a
+    endpoint: https://example.com/a2a
+  - protocol: mcp
+    endpoint: https://example.com/mcp

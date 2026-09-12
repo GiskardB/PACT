@@ -1,0 +1,32 @@
+# A realistic day-to-day manifest: says what kind of cognition the agent needs
+# and what it's allowed to do, without every optional field from the Extended
+# example. See SPECIFICATION.md §11 (Cognition) and §14 (Contract).
+apiVersion: pact/v1
+kind: Agent
+
+metadata:
+  name: support-triage-agent
+  version: 1.2.0
+  description: Classify and route incoming support tickets.
+
+capabilities:
+  - id: ticket-classification
+    description: Assign a category and priority to a new ticket.
+  - id: ticket-routing
+    description: Assign the ticket to the right team queue.
+
+cognition:
+  capabilities:
+    - reasoning
+    - structured-output
+
+contract:
+  autonomy:
+    level: 1
+  permissions:
+    - read_ticket
+    - write_ticket_labels
+
+interfaces:
+  - protocol: mcp
+    endpoint: https://support.example.com/mcp

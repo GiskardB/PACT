@@ -20,7 +20,8 @@ core design principle:
 > The specification must be easier to understand and implement than the problem it describes.
 
 **Read the specification: [SPECIFICATION.md](SPECIFICATION.md)** (has a
-[table of contents](SPECIFICATION.md#contents) for the 50 short sections)
+[table of contents](SPECIFICATION.md#contents) for the 50 short sections), or start with
+[three annotated example manifests](examples/).
 
 ---
 

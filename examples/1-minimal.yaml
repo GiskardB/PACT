@@ -1,0 +1,15 @@
+# The smallest useful PACT manifest: a name, what it can do, how to reach it.
+# See SPECIFICATION.md §4 (Minimal Manifest).
+apiVersion: pact/v1
+kind: Agent
+
+metadata:
+  name: architecture-agent
+  version: 1.0.0
+
+capabilities:
+  - architecture-analysis
+
+interfaces:
+  - protocol: a2a
+    endpoint: https://example.com/a2a
