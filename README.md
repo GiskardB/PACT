@@ -64,6 +64,11 @@ PACT is not tied to any one implementation, framework or vendor — see
 [§28, No Required Framework](SPECIFICATION.md#28-no-required-framework) and
 [§40, What Makes PACT Different](SPECIFICATION.md#40-what-makes-pact-different).
 
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for the first 6 months: review, independent
+implementations, and release readiness.
+
 ## Implementations
 
 [§46, Reference Implementations](SPECIFICATION.md#46-reference-implementations) lists

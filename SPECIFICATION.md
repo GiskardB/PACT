@@ -1463,3 +1463,6 @@ The objective is not to add more features.
 It is to find the **smallest useful semantic layer that is not already adequately standardized elsewhere**.
 
 That constraint is fundamental to PACT.
+
+The public [roadmap](ROADMAP.md) lays out the first 6 months toward independent
+implementations and a v1.0 candidate.
